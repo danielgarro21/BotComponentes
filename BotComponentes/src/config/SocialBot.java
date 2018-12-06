@@ -47,7 +47,7 @@ public class SocialBot extends TelegramLongPollingBot {
 
         }
 
-        if (mensajeRecibido.equals("/FAQ")) {
+       else if (mensajeRecibido.equals("/FAQ")) {
             System.out.println(update.getMessage().getFrom().getFirstName());
             message.setText("Estas son nuestras preguntas más frecuentes");
 
@@ -76,29 +76,29 @@ public class SocialBot extends TelegramLongPollingBot {
 
             message.setReplyMarkup(keyboardMarkup);
         }
-        if (mensajeRecibido.equals("¿Como puedo mandar un mensaje a mis usuarios?")) {
+       else if (mensajeRecibido.equals("¿Como puedo mandar un mensaje a mis usuarios?")) {
             message.setText("");
         }
-        if (mensajeRecibido.equals("¿Como creo una campaña nueva?")) {
-            message.setText("");
-
-        }
-        if (mensajeRecibido.equals("")) {
+       else  if (mensajeRecibido.equals("¿Como creo una campaña nueva?")) {
             message.setText("");
 
         }
-        if (mensajeRecibido.equals("")) {
+       else if (mensajeRecibido.equals("")) {
             message.setText("");
 
         }
-        if (mensajeRecibido.equals("")) {
+       else if (mensajeRecibido.equals("")) {
+            message.setText("");
+
+        }
+       else if (mensajeRecibido.equals("")) {
             message.setText("");
         }
 
-        if (mensajeRecibido.equals("/estadisticas")) {
+       else if (mensajeRecibido.equals("/estadisticas")) {
           message.setText("http://carlosguerraterol.com/wp-content/uploads/2016/04/Visi%C3%B3n-Genral-Publicaciones-Recientes-Estadisticas-Facebook.jpg");
         }
-        if (mensajeRecibido.contains("/soporte")) {
+       else if (mensajeRecibido.contains("/soporte")) {
 
             String pregunta = update.getMessage().getText().replace("/soporte", "");
 
@@ -120,12 +120,14 @@ public class SocialBot extends TelegramLongPollingBot {
                 Logger.getLogger(SocialBot.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (mensajeRecibido.equals("/esconder")) {
+       else if (mensajeRecibido.equals("/esconder")) {
             message.setChatId(id).setText("Teclado oculto...");
             ReplyKeyboardRemove keyboardMarkup = new ReplyKeyboardRemove();
             message.setReplyMarkup(keyboardMarkup);
 
-        }
+        }else{
+           message.setText("No entiendo este comando");
+       }
 
         try {
             sendMessage(message);
