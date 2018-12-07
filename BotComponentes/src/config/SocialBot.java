@@ -5,10 +5,13 @@
  */
 package config;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Pregunta;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.Update;
@@ -113,7 +116,16 @@ public class SocialBot extends TelegramLongPollingBot {
                     + ", ha enviado la siguiente consulta:" + pregunta + ". Username: " + update.getMessage().getFrom().getUserName());
 
             message.setText("Su consulta:" + update.getMessage().getText().replace("/soporte", "") + ", ha sido enviada. Pronto será contactado.");
-
+            
+            ServicioPregunta servicio = new ServicioPregunta();
+            Pregunta p = new Pregunta();
+            servicio.conectar();
+            p.setIdPregunta(0);
+            p.setChatId(update.getMessage().getChatId().toString());
+            p.setContenido(update.getMessage().getText().replace("/soporte",""));
+            p.setFecha(Date.valueOf(LocalDate.now()));
+            servicio.agregarPregunta(p);
+            
             try {
                 sendMessage(consulta);
             } catch (TelegramApiException ex) {
