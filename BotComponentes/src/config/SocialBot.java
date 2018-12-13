@@ -46,7 +46,8 @@ public class SocialBot extends TelegramLongPollingBot {
             System.out.println(update.getMessage().getFrom().getFirstName());
             message.setText("Hola" + " " + update.getMessage().getFrom().getFirstName() + ", comandos dispnibles \n"
                     + "/FAQ \n"
-                    + "/estadisticaCampaña ");
+                    + "/estadisticaCampaña "
+                    + "/soporte");
 
         }
 
@@ -132,6 +133,23 @@ public class SocialBot extends TelegramLongPollingBot {
                 Logger.getLogger(SocialBot.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+       else if (mensajeRecibido.contains("/respuesta")){
+           String respuesta = update.getMessage().getText().replace("/respuesta", " ");
+           
+           long idUsuario;
+           
+           idUsuario = 301740632;
+           SendMessage contenido = new SendMessage().setChatId(idUsuario);
+           contenido.setChatId(idUsuario);
+           contenido.setText("El administrador: " + update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName() 
+           + ", ha enviado la respuesta de tu pregunta: " + respuesta);
+           
+               try {
+                sendMessage(contenido);
+            } catch (TelegramApiException ex) {
+                Logger.getLogger(SocialBot.class.getName()).log(Level.SEVERE, null, ex);
+            }     
+       }
        else if (mensajeRecibido.equals("/esconder")) {
             message.setChatId(id).setText("Teclado oculto...");
             ReplyKeyboardRemove keyboardMarkup = new ReplyKeyboardRemove();
